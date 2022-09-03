@@ -29,13 +29,15 @@ dependencies {
             "com.codeborne:selenide:6.7.2",
             "io.qameta.allure:allure-selenide:$allureVersion",
             "org.junit.jupiter:junit-jupiter:5.9.0",
-            "org.slf4j:slf4j-simple:1.7.32"
+            "org.slf4j:slf4j-simple:2.0.0",
+            "com.github.javafaker:javafaker:1.0.2"
     )
 }
 
 tasks.withType(Test){
     useJUnitPlatform()
-
+    java
+    resources
     testLogging {
         lifecycle {
             events "started", "skipped", "failed", "standard_error", "standard_out"
