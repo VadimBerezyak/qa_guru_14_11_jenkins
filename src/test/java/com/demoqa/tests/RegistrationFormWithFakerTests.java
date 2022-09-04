@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static io.qameta.allure.Allure.step;
 import static java.lang.CharSequence.compare;
 import static java.lang.String.format;
 
@@ -37,7 +38,6 @@ public class RegistrationFormWithFakerTests extends TestBase {
             expectedDateOfBirth;
 
     @BeforeEach
-
     void randomTestData() {
         firstName = faker.name().firstName();
         lastName = faker.name().lastName();
@@ -55,34 +55,41 @@ public class RegistrationFormWithFakerTests extends TestBase {
         expectedStateCityAddress = format("%s %s", state, city);
         month = RandomUtils.getRandomMonthOfBirth();
         year = faker.number().numberBetween(1900, 2100) + "";
-        day = RandomUtils.getRandomDayOfBirth(month,year);
+        day = RandomUtils.getRandomDayOfBirth(month, year);
         expectedDateOfBirth = format("%s %s,%s", day, month, year);
     }
+
     @Test
     void fillFormTest() {
-        registrationFormPage.openPage()
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .setUserEmail(email)
-                .setUserGender(gender)
-                .setUserNumber(mobile)
-                .setBirthDate(day, month, year)
-                .setUserSubject(subject)
-                .setUserHobbies(hobbies)
-                .uploadUserPicture(picturePath)
-                .setUserCurrentAddress(currentAddress)
-                .setStateAndCity(state, city)
-                .submitForm()
-                .checkResultsTableIsVisible()
-                .checkResultsInTable("State and City", expectedStateCityAddress)
-                .checkResultsInTable("Student Name", expectedFullName)
-                .checkResultsInTable("Gender", gender)
-                .checkResultsInTable("Mobile", mobile)
-                .checkResultsInTable("Date of Birth", expectedDateOfBirth)
-                .checkResultsInTable("Subjects", subject)
-                .checkResultsInTable("Hobbies", hobbies)
-                .checkResultsInTable("Picture", pictureName)
-                .checkResultsInTable("Address", currentAddress);
+        step("открыть страницу формы регистрации", () -> {
+            registrationFormPage.openPage();
+        });
+        step("заполнить форму регистрации", () -> {
+            registrationFormPage.setFirstName(firstName)
+                    .setLastName(lastName)
+                    .setUserEmail(email)
+                    .setUserGender(gender)
+                    .setUserNumber(mobile)
+                    .setBirthDate(day, month, year)
+                    .setUserSubject(subject)
+                    .setUserHobbies(hobbies)
+                    .uploadUserPicture(picturePath)
+                    .setUserCurrentAddress(currentAddress)
+                    .setStateAndCity(state, city)
+                    .submitForm();
+        });
+        step("проверка правильности заполнения формы", () -> {
+            registrationFormPage.checkResultsTableIsVisible()
+                    .checkResultsInTable("State and City", expectedStateCityAddress)
+                    .checkResultsInTable("Student Name", expectedFullName)
+                    .checkResultsInTable("Gender", gender)
+                    .checkResultsInTable("Mobile", mobile)
+                    .checkResultsInTable("Date of Birth", expectedDateOfBirth)
+                    .checkResultsInTable("Subjects", subject)
+                    .checkResultsInTable("Hobbies", hobbies)
+                    .checkResultsInTable("Picture", pictureName)
+                    .checkResultsInTable("Address", currentAddress);
+        });
     }
 
     @Test
