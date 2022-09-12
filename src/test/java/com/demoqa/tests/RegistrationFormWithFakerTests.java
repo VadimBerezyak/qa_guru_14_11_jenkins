@@ -5,6 +5,7 @@ import com.demoqa.pages.components.ResultsTableComponent;
 import com.demoqa.utils.RandomUtils;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -59,38 +60,38 @@ public class RegistrationFormWithFakerTests extends TestBase {
         expectedDateOfBirth = format("%s %s,%s", day, month, year);
     }
 
-    @Test
-    void fillFormTest() {
-        step("открыть страницу формы регистрации", () -> {
-            registrationFormPage.openPage();
-        });
-        step("заполнить форму регистрации", () -> {
-            registrationFormPage.setFirstName(firstName)
-                    .setLastName(lastName)
-                    .setUserEmail(email)
-                    .setUserGender(gender)
-                    .setUserNumber(mobile)
-                    .setBirthDate(day, month, year)
-                    .setUserSubject(subject)
-                    .setUserHobbies(hobbies)
-                    .uploadUserPicture(picturePath)
-                    .setUserCurrentAddress(currentAddress)
-                    .setStateAndCity(state, city)
-                    .submitForm();
-        });
-        step("проверка правильности заполнения формы", () -> {
-            registrationFormPage.checkResultsTableIsVisible()
-                    .checkResultsInTable("State and City", expectedStateCityAddress)
-                    .checkResultsInTable("Student Name", expectedFullName)
-                    .checkResultsInTable("Gender", gender)
-                    .checkResultsInTable("Mobile", mobile)
-                    .checkResultsInTable("Date of Birth", expectedDateOfBirth)
-                    .checkResultsInTable("Subjects", subject)
-                    .checkResultsInTable("Hobbies", hobbies)
-                    .checkResultsInTable("Picture", pictureName)
-                    .checkResultsInTable("Address", currentAddress);
-        });
-    }
+//    @Test
+//    void fillFormTest() {
+//        step("открыть страницу формы регистрации", () -> {
+//            registrationFormPage.openPage();
+//        });
+//        step("заполнить форму регистрации", () -> {
+//            registrationFormPage.setFirstName(firstName)
+//                    .setLastName(lastName)
+//                    .setUserEmail(email)
+//                    .setUserGender(gender)
+//                    .setUserNumber(mobile)
+//                    .setBirthDate(day, month, year)
+//                    .setUserSubject(subject)
+//                    .setUserHobbies(hobbies)
+//                    .uploadUserPicture(picturePath)
+//                    .setUserCurrentAddress(currentAddress)
+//                    .setStateAndCity(state, city)
+//                    .submitForm();
+//        });
+//        step("проверка правильности заполнения формы", () -> {
+//            registrationFormPage.checkResultsTableIsVisible()
+//                    .checkResultsInTable("State and City", expectedStateCityAddress)
+//                    .checkResultsInTable("Student Name", expectedFullName)
+//                    .checkResultsInTable("Gender", gender)
+//                    .checkResultsInTable("Mobile", mobile)
+//                    .checkResultsInTable("Date of Birth", expectedDateOfBirth)
+//                    .checkResultsInTable("Subjects", subject)
+//                    .checkResultsInTable("Hobbies", hobbies)
+//                    .checkResultsInTable("Picture", pictureName)
+//                    .checkResultsInTable("Address", currentAddress);
+//        });
+//    }
 
     @Test
     void fillFormWithMinimumDataFormTest() {
